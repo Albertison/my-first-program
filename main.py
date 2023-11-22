@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QLineEdit, QWidget, QLabel, QPushButton, QFileDialog
-import sys, os
+import sys
 import pytube
 
 
@@ -31,7 +31,7 @@ class Downloader(QWidget):
         self.button.clicked.connect(self.work)
 
     def work(self):
-        wb_patch = QFileDialog.getOpenFileName()[0]
+        wb_patch = QFileDialog.getExistingDirectory(self)
         self.text2.setText(wb_patch)
 
 
