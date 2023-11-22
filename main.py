@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QLineEdit, QWidget, QLabel, QPushButton, QFileDialog
 import sys
-import pytube
+from pytube import YouTube
 
 
 class Downloader(QWidget):
@@ -29,11 +29,16 @@ class Downloader(QWidget):
         self.buttondownload.setText('Скачать')
 
         self.button.clicked.connect(self.work)
+        self.buttondownload.clicked.connect(self.work2)
 
     def work(self):
         wb_patch = QFileDialog.getExistingDirectory(self)
         self.text2.setText(wb_patch)
 
+    def work2(self):
+        yt = YouTube(self.line.text())
+        ys = yt.streams.get_highest_resolution()
+        ys.download(self.text2.text())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
