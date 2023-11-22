@@ -36,9 +36,8 @@ class Downloader(QWidget):
         self.text2.setText(wb_patch)
 
     def work2(self):
-        yt = YouTube(self.line.text())
-        ys = yt.streams.get_highest_resolution()
-        ys.download(self.text2.text())
+        self.myStream = YouTube(self.line.text()).streams.first()
+        self.myStream.download(str(self.text2.text()))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
