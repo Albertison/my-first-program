@@ -7,7 +7,7 @@ class Downloader(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setGeometry(250, 250, 700, 190)
+        self.setGeometry(250, 250, 700, 210)
         self.setWindowTitle('скачиватель видео')
         self.line = QLineEdit(self)
         self.line.setGeometry(40, 50, 600, 20)
@@ -31,6 +31,13 @@ class Downloader(QWidget):
         self.text5 = QLabel(self)
         self.text5.setGeometry(90, 140, 300, 35)
 
+        self.text6 = QLabel(self)
+        self.text6.setGeometry(40, 160, 150, 35)
+        self.text6.setText('Качество:')
+
+        self.text7 = QLabel(self)
+        self.text7.setGeometry(100, 160, 150, 35)
+
         self.button = QPushButton(self)
         self.button.setGeometry(40, 80, 100, 30)
         self.button.setText('Установить путь')
@@ -50,7 +57,9 @@ class Downloader(QWidget):
             ("mp3", "mp4"), 1, False)
         if ok_pressed and format:
             self.text5.setText(format)
-
+        kachestvo, ok = QInputDialog.getItem(self, 'качество', 'какое качество желаете?', ('114', '123'), 1, False)
+        if ok and kachestvo:
+            self.text7.setText(kachestvo)
 
     def work2(self):
         self.myStream = YouTube(self.line.text()).streams.first()
