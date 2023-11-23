@@ -1,9 +1,13 @@
-from PyQt5.QtWidgets import QApplication, QLineEdit, QWidget, QLabel, QPushButton, QFileDialog, QInputDialog
 import sys
+import threading
+
+from PyQt5.QtWidgets import QApplication, QLineEdit, QWidget, QLabel, QPushButton, QFileDialog
 from pytube import YouTube
 
 
 class Downloader(QWidget):
+    wt: YouTube
+
     def __init__(self):
         super().__init__()
 
@@ -49,15 +53,22 @@ class Downloader(QWidget):
         self.buttondownload.setText('Скачать')
 
         self.button.clicked.connect(self.work)
-        self.buttondownload.clicked.connect(self.work2)
+        self.buttondownload.clicked.connect(self.thread_process)
 
     def work(self):
         wb_patch = QFileDialog.getExistingDirectory(self)
         self.text2.setText(wb_patch)
 
     def work2(self):
-        self.myStream = YouTube(self.line.text()).streams.get_highest_resolution()
-        self.myStream.download(str(self.text2.text()))
+        link = self.line.text()
+        self.wt = YouTube(link)
+        ws = self.wt.streams.get_highest_resolution()
+        ws.download(self.text2.text())
+        print('end')
+
+    def thread_process(self):
+        thread = threading.Thread(target=self.work2)
+        thread.start()
 
 
 if __name__ == '__main__':
