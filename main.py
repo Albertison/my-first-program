@@ -30,6 +30,7 @@ class Downloader(QWidget):
 
         self.text5 = QLabel(self)
         self.text5.setGeometry(90, 140, 300, 35)
+        self.text5.setText('mp4')
 
         self.text6 = QLabel(self)
         self.text6.setGeometry(40, 160, 150, 35)
@@ -37,6 +38,7 @@ class Downloader(QWidget):
 
         self.text7 = QLabel(self)
         self.text7.setGeometry(100, 160, 150, 35)
+        self.text7.setText('высшее по умолчанию')
 
         self.button = QPushButton(self)
         self.button.setGeometry(40, 80, 100, 30)
@@ -52,17 +54,9 @@ class Downloader(QWidget):
     def work(self):
         wb_patch = QFileDialog.getExistingDirectory(self)
         self.text2.setText(wb_patch)
-        format, ok_pressed = QInputDialog.getItem(
-            self, "формат", "какой формат нужен?",
-            ("mp3", "mp4"), 1, False)
-        if ok_pressed and format:
-            self.text5.setText(format)
-        kachestvo, ok = QInputDialog.getItem(self, 'качество', 'какое качество желаете?', ('114', '123'), 1, False)
-        if ok and kachestvo:
-            self.text7.setText(kachestvo)
 
     def work2(self):
-        self.myStream = YouTube(self.line.text()).streams.first()
+        self.myStream = YouTube(self.line.text()).streams.get_highest_resolution()
         self.myStream.download(str(self.text2.text()))
 
 
