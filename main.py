@@ -45,11 +45,12 @@ class Downloader(QWidget):
     def work(self):
         wb_patch = QFileDialog.getExistingDirectory(self)
         self.text2.setText(wb_patch)
-        country, ok_pressed = QInputDialog.getItem(
+        format, ok_pressed = QInputDialog.getItem(
             self, "формат", "какой формат нужен?",
             ("mp3", "mp4"), 1, False)
-        if ok_pressed and country:
-            self.text5.setText(country)
+        if ok_pressed and format:
+            self.text5.setText(format)
+
 
     def work2(self):
         self.myStream = YouTube(self.line.text()).streams.first()
